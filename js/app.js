@@ -41,7 +41,7 @@ const displayData = (tools) => {
           <p class="m-0 "> ${tool.published_in} </p>
          </div>
         <div class="bg-danger-subtle px-1  rounded-circle">
-         <i class="fa-solid fa-arrow-right text-danger "></i>
+         <i onclick="loadDetails('${tool.id}')" class="fa-solid fa-arrow-right text-danger " data-bs-toggle="modal" data-bs-target="#Ai-details"></i>
         </div>
         </div>
         </div>
@@ -72,6 +72,15 @@ const spinner = (isSpinning) => {
 }
 
 loadData(limit);
+
+const loadDetails = async id =>{
+    const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.data);
+
+}
+
 
 // show all cards 
 const showAllBtn  = document.getElementById('showAll-btn');

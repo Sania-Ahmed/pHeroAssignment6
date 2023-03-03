@@ -7,42 +7,24 @@ const loadData2 = async (limit) => {
     const res = await fetch(url);
     const data = await res.json();
     const dataArr2 = data.data.tools;
+    const newData = [...dataArr2];
+
     let dateArr =[];
 
- for (let index = 0; index < dataArr2.length; index++) {
-    const element = dataArr2[index];
-    const a = new Date(element.published_in[index]);
-    const b = new Date(element.published_in[index + 1]);
-    dateComparison(a,b);
- }
- function dateComparison(a, b) {  
-    return a - b ;
-}
-dataArr2.sort(dateComparison);
-    console.log(dataArr2);
-
-    const i = ['a', 'b', 'c', 'd' ]
-    console.log(i.indexOf(i[0]))
-   
-
-
-
-
-
-
-
-
-
-
-
-
-    if(limit){
-        const dataArr = dateArr.slice(0,6);
-        displayData(dateArr);
+    for(item of dataArr2){
+        dateArr.push(item.published_in)
+        const {published_in} = item ;
+        console.log(published_in);
     }
-    else{
-        displayData(dateArr)
-    }
+    dataArr2.sort(function(a, b){
+        a = new Date(a);
+        b = new Date(b);
+        return b - a 
+    });
+    console.log(dataArr2)
+    newData.sort((a, b) => dateArr.indexOf(a) - dateArr.indexOf(b));
+     console.log(newData.sort((a, b) => dateArr.indexOf(a) - dateArr.indexOf(b)))
+
 }
 loadData2()
 })
