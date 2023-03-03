@@ -77,7 +77,83 @@ const loadDetails = async id =>{
     const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data.data);
+    displayDetails(data.data);
+
+}
+const displayDetails = data => {
+  const container = document.getElementById('modal-container');
+  container.innerHTML = `
+  <section class="d-flex justify-content-center">
+     <div class="bg-danger-subtle border border-danger rounded p-2 w-50">
+       <div> 
+         <h4 class="font-bold">${data.description}</h4>
+       </div>
+       <div class="row p-2 gx-2"  id="${data.tool_name}"> </div>
+   </div>
+  <div class = "w-50"> 
+        <div>
+          <div class = "p-2 rounded">
+           <img src= "${data.image_link[0] ? data.image_link[0] : data.image_link[1] }" class="img-fluid rounded" >
+           </div>
+           <div>
+           <h5>${data.input_output_examples[0].input ? data.input_output_examples[0].input : ' no question  ' }</h5>
+           <h5>${data.input_output_examples[0].output ? 
+            data.input_output_examples[0].output
+             : ' no answer' }</h5>
+           
+           </div>
+        </div> 
+  </div>
+  </section>
+  `
+  const displayPrice = () => {
+  const pricing = data.pricing;
+  pricing.forEach(item => {
+    const div = document.createElement('div');
+    div.innerHTML = `
+    <h6>${item.plan}</h6>
+    <h6>${item.price}</h6>
+    `
+    div.classList.add('col-4','bg-border-primary', 'bg-dark', 'text-white', 'rounded', 'mx-1')
+    document.getElementById(`${data.tool_name}`).appendChild(div);
+  })
+}
+displayPrice()
+
+const displayFeaturesList = () => {
+    const featuresContainer = Object.values(data.features)   ;
+    ;
+    const h4 = document.createElement('h4');
+    h4.innerText = "Features"
+    document.getElementById(`${data.tool_name}`).appendChild(h4);
+    featuresContainer.forEach(item => {
+      const ul = document.createElement('ul');
+      ul.innerHTML +=`
+      <li>${item.feature_name}</li> 
+      ` ;
+      ul.classList.add('col-6');
+      document.getElementById(`${data.tool_name}`).appendChild(ul);
+    console.log(ul);
+    })
+  }
+  displayFeaturesList()
+  const displayinteragationList = () => {
+    const integrationsContainer = data.integrations;
+    ;
+    const h4 = document.createElement('h4');
+    h4.innerText = "Integrations"
+    document.getElementById(`${data.tool_name}`).appendChild(h4);
+    integrationsContainer.forEach(item => {
+      const ul = document.createElement('ul');
+      ul.innerHTML +=`
+      <li>${item}</li> 
+      ` ;
+      ul.classList.add('col-6');
+      document.getElementById(`${data.tool_name}`).appendChild(ul);
+    console.log(ul);
+    })
+  }
+  displayinteragationList();
 
 }
 
