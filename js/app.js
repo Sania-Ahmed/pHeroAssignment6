@@ -28,11 +28,8 @@ const displayData = (tools) => {
         <img src="${tool.image}" class="card-img-top">
         <div class="card-body">
         <h5 class="card-title">Features</h5>
-        <ol class="card-text">
-        <li>${featureList[0]}</li>
-        <li>${featureList[1]}</li>
-        <li>${featureList[2] ? featureList[2] : 'feature not available'}</li>
-        <li>${featureList[3] ? featureList[3] : 'feature not available'}</li>
+        <ol class="card-text" id="${tool.id}">
+        
         </ol>
         </div>
         <hr>
@@ -51,8 +48,17 @@ const displayData = (tools) => {
         </div>
         </div>
         `
+        function features () {
+            
+          featureList.forEach(item => {
+            const li = document.createElement('li');
+            li.innerText = item;
+            document.getElementById(`${tool.id}`).appendChild(li);
+          })
+        }
+        features()
     });
-    spinner(false);
+    spinner(false)
 }
 
 // spinner onload 
