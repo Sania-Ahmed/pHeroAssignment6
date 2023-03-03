@@ -58,10 +58,10 @@ const displayData = (tools) => {
 // spinner onload 
 const spinner = (isSpinning) => {
     if (isSpinning) {
-        document.getElementById('spinner').classList.remove('d-none')
+        document.getElementById('spinner').classList.remove('d-none');
     }
     else{
-        document.getElementById('spinner').classList.add('d-none')
+        document.getElementById('spinner').classList.add('d-none');
     }
 }
 
