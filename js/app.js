@@ -84,22 +84,23 @@ const displayDetails = data => {
   const container = document.getElementById('modal-container');
   container.innerHTML = `
   <section class="d-flex justify-content-center">
-     <div class="bg-danger-subtle border border-danger rounded p-2 w-50">
+     <div class="bg-danger-subtle border border-danger rounded p-4 w-50">
        <div> 
          <h4 class="font-bold">${data.description}</h4>
        </div>
        <div class="row p-2 gx-2"  id="${data.tool_name}"> </div>
    </div>
-  <div class = "w-50"> 
-        <div>
-          <div class = "p-2 rounded">
+  <div class = "w-50 p-2"> 
+        <div class= "position-relative">
+          <div class = "p-2 rounded position-relative">
            <img src= "${data.image_link[0] ? data.image_link[0] : data.image_link[1] }" class="img-fluid rounded" >
            </div>
-           <div>
-           <h5>${data.input_output_examples[0].input ? data.input_output_examples[0].input : ' no question  ' }</h5>
-           <h5>${data.input_output_examples[0].output ? 
-            data.input_output_examples[0].output
-             : ' no answer' }</h5>
+           <div class= "bg-danger rounded position-absolute top-0 end-0" style="width:150px; padding:5px; ${(data.accuracy.score === null ? 'display:none' : '')}">
+           <p class = "text-white text-center m-0">${(data.accuracy.score) * 100}% accuracy </p>
+           </div>
+           <div clas="text-center">
+           <h5 class="my-3 fw-bold text-center fs-2">${(data.input_output_examples === null) ? ' No Input available' : data.input_output_examples[0].input}</h5>
+           <h5 class="mt-2 text-center">${(data.input_output_examples === null) ? ' No Output available' : data.input_output_examples[0].output}</h5>
            
            </div>
         </div> 
@@ -108,15 +109,23 @@ const displayDetails = data => {
   `
   const displayPrice = () => {
   const pricing = data.pricing;
-  pricing.forEach(item => {
-    const div = document.createElement('div');
-    div.innerHTML = `
-    <h6>${item.plan}</h6>
-    <h6>${item.price}</h6>
-    `
-    div.classList.add('col-4','bg-border-primary', 'bg-dark', 'text-white', 'rounded', 'mx-1')
-    document.getElementById(`${data.tool_name}`).appendChild(div);
-  })
+  if( data.pricing === null ) {
+    const h4 = document.createElement('h4');
+    h4.innerText = "Free No cost"
+    h4.classList.add('text-success');
+    document.getElementById(`${data.tool_name}`).appendChild(h4);
+  }
+  else{
+    pricing.forEach(item => {
+      const div = document.createElement('div');
+      div.innerHTML = `
+      <h6>${ (data.pricing === null ) ? 'Free' : item.plan}</h6>
+      <h6>${(item === null || item.price === "0" || data.pricing === null  ) ? 'No cost' : item.price}</h6>
+      `
+      div.classList.add('col-4', 'text-success');
+      document.getElementById(`${data.tool_name}`).appendChild(div);
+    })
+  }
 }
 displayPrice()
 
@@ -129,9 +138,9 @@ const displayFeaturesList = () => {
     featuresContainer.forEach(item => {
       const ul = document.createElement('ul');
       ul.innerHTML +=`
-      <li>${item.feature_name}</li> 
+      <li class="list-group-item fw-bold text-primary">${item.feature_name ? item.feature_name : 'Feature not found'}</li> 
       ` ;
-      ul.classList.add('col-6');
+      ul.classList.add('flex', 'flex-column','list-group', 'mb-2');
       document.getElementById(`${data.tool_name}`).appendChild(ul);
     console.log(ul);
     })
@@ -143,15 +152,23 @@ const displayFeaturesList = () => {
     const h4 = document.createElement('h4');
     h4.innerText = "Integrations"
     document.getElementById(`${data.tool_name}`).appendChild(h4);
-    integrationsContainer.forEach(item => {
-      const ul = document.createElement('ul');
-      ul.innerHTML +=`
-      <li>${item}</li> 
-      ` ;
-      ul.classList.add('col-6');
-      document.getElementById(`${data.tool_name}`).appendChild(ul);
-    console.log(ul);
-    })
+    if(data.integrations === null){
+      const h5 = document.createElement('h5');
+      h5.innerText = "Not found"
+      h5.classList.add('text-danger');
+      document.getElementById(`${data.tool_name}`).appendChild(h5);
+    }
+    else{
+      integrationsContainer.forEach(item => {
+        const ul = document.createElement('ul');
+        ul.innerHTML +=`
+        <li class="list-group-item fw-bold text-warning">${(item === null || data.integrations === null) ? 'not found' : item}</li> 
+        ` ;
+        ul.classList.add('flex', 'flex-column','list-group', 'mb-2');
+        document.getElementById(`${data.tool_name}`).appendChild(ul);
+      console.log(ul);
+      })
+    }
   }
   displayinteragationList();
 
