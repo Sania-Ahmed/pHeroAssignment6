@@ -83,14 +83,14 @@ const loadDetails = async id =>{
 const displayDetails = data => {
   const container = document.getElementById('modal-container');
   container.innerHTML = `
-  <section class="d-flex justify-content-center">
-     <div class="bg-danger-subtle border border-danger rounded p-4 w-50">
+  <section class="d-flex flex-column-reverse flex-md-row justify-content-center">
+     <div class="bg-danger-subtle border border-danger rounded p-4 w-100 w-md-50">
        <div> 
          <h4 class="font-bold">${data.description}</h4>
        </div>
        <div class="row p-2 gx-2"  id="${data.tool_name}"> </div>
    </div>
-  <div class = "w-50 p-2"> 
+  <div class = "w-100 w-md-50 p-2"> 
         <div class= "position-relative">
           <div class = "p-2 rounded position-relative">
            <img src= "${data.image_link[0] ? data.image_link[0] : data.image_link[1] }" class="img-fluid rounded" >
