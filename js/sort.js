@@ -13,7 +13,9 @@ const loadData2 = async (limit) => {
         // to get a value that is either negative, positive, or zero.
         return new Date(b.published_in) - new Date(a.published_in);
     });
-    displayData2(sortedData);
+    
+     displayData2(sortedData);
+
 }
 const displayData2 = (tools) => {
     const container = document.getElementById('card-container')
@@ -55,6 +57,8 @@ const displayData2 = (tools) => {
           })
         }
         features2()
+        document.getElementById('showAll-btn').classList.add('d-none')
+        document.getElementById('sort-btn').classList.add('d-none')
     });
     spinner(false)
 }
