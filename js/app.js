@@ -1,6 +1,7 @@
 // fetching the data 
 const limit = 6 ;
 const loadData = async (limit) => {
+   spinner(true)
     const url = `https://openapi.programming-hero.com/api/ai/tools`
     const res = await fetch(url);
     const data = await res.json();
@@ -72,6 +73,8 @@ const spinner = (isSpinning) => {
 
 loadData(limit);
 
+// modal functionalities 
+
 const loadDetails = async id =>{
     const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
     const res = await fetch(url);
@@ -98,8 +101,8 @@ const displayDetails = data => {
            <p class = "text-white text-center m-0">${(data.accuracy.score) * 100}% accuracy </p>
            </div>
            <div clas="text-center">
-           <h5 class="my-3 fw-bold text-center fs-2">${(data.input_output_examples === null) ? ' No Input available' : data.input_output_examples[0].input}</h5>
-           <h5 class="mt-2 text-center">${(data.input_output_examples === null) ? ' No Output available' : data.input_output_examples[0].output}</h5>
+           <h5 class="my-3 fw-bold text-center fs-2">${(data.input_output_examples === null) ? 'Can you give any example?' : data.input_output_examples[0].input}</h5>
+           <h5 class="mt-2 text-center">${(data.input_output_examples === null) ? ' No not yet ! take a break !' : data.input_output_examples[0].output}</h5>
            
            </div>
         </div> 
@@ -110,7 +113,7 @@ const displayDetails = data => {
   const pricing = data.pricing;
   if( data.pricing === null ) {
     const h4 = document.createElement('h4');
-    h4.innerText = "Free No cost"
+    h4.innerText = "Free, No cost !"
     h4.classList.add('text-success');
     document.getElementById(`${data.tool_name}`).appendChild(h4);
   }
@@ -118,8 +121,8 @@ const displayDetails = data => {
     pricing.forEach(item => {
       const div = document.createElement('div');
       div.innerHTML = `
-      <h6>${ (data.pricing === null ) ? 'Free' : item.plan}</h6>
-      <h6>${(item === null || item.price === "0" || data.pricing === null  ) ? 'No cost' : item.price}</h6>
+      <h6>${ (data.pricing === null ) ? 'Free!' : item.plan}</h6>
+      <h6>${(item === null || item.price === "0" || data.pricing === null  ) ? 'No cost!' : item.price}</h6>
       `
       div.classList.add('col-4', 'text-success');
       document.getElementById(`${data.tool_name}`).appendChild(div);
@@ -153,7 +156,7 @@ const displayFeaturesList = () => {
     document.getElementById(`${data.tool_name}`).appendChild(h4);
     if(data.integrations === null){
       const h5 = document.createElement('h5');
-      h5.innerText = "Not found"
+      h5.innerText = "Data not found"
       h5.classList.add('text-danger');
       document.getElementById(`${data.tool_name}`).appendChild(h5);
     }
@@ -172,6 +175,7 @@ const displayFeaturesList = () => {
   displayinteragationList();
 
 }
+// -------
 
 
 // show all cards 
