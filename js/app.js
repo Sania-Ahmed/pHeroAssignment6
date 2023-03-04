@@ -113,7 +113,7 @@ const displayDetails = data => {
   const pricing = data.pricing;
   if( data.pricing === null ) {
     const h4 = document.createElement('h4');
-    h4.innerText = "Free, No cost !"
+    h4.innerText = "Free,No cost !"
     h4.classList.add('text-success');
     document.getElementById(`${data.tool_name}`).appendChild(h4);
   }
@@ -124,7 +124,7 @@ const displayDetails = data => {
       <h6>${ (data.pricing === null ) ? 'Free!' : item.plan}</h6>
       <h6>${(item === null || item.price === "0" || data.pricing === null  ) ? 'No cost!' : item.price}</h6>
       `
-      div.classList.add('col-4', 'text-success');
+      div.classList.add('col-12','col-md-4', 'text-success');
       document.getElementById(`${data.tool_name}`).appendChild(div);
     })
   }
